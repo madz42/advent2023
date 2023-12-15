@@ -1,5 +1,8 @@
 const fs = require('fs');
 
+// == IO and parsing ==
+
+// Load Input File
 const readInputFile = (fileName) => {
   try {
     const data = fs.readFileSync(`./${fileName}.input`, 'utf-8');
@@ -11,6 +14,8 @@ const readInputFile = (fileName) => {
 };
 
 const splitByLine = (file) => file.split(/\r?\n/);
+
+// == MATH ==
 
 // Greatest Common Divisor
 const gcd = (a, b) => (b === 0 ? a : gcd(b, a % b));
@@ -27,4 +32,29 @@ const findLCM = (numbers) => {
   return result;
 };
 
-module.exports = { readInputFile, splitByLine, findLCM };
+// == Optimizations ==
+
+// Caching Helper
+const createCache = () => {
+  let cache = {};
+  return {
+    check(key) {
+      const keyString = JSON.stringify(key);
+      return cache[keyString];
+    },
+    store(key, value) {
+      cache[JSON.stringify(key)] = value;
+    },
+    clean() {
+      cache = {};
+    },
+    getSize() {
+      return Object.keys(cache).length;
+    },
+    getCache() {
+      return cache;
+    },
+  };
+};
+
+module.exports = { readInputFile, splitByLine, findLCM, createCache };

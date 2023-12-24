@@ -57,4 +57,25 @@ const createCache = () => {
   };
 };
 
-module.exports = { readInputFile, splitByLine, findLCM, createCache };
+// Priority Queue Helper
+const createPriorityQueue = (priority) => {
+  //priority 'lo' or 'hi' = sorting asc or desc
+  let queue = [];
+  return {
+    push(item) {
+      queue.push(item);
+      priority === 'lo' ? queue.sort((a, b) => a[0] - b[0]) : queue.sort((a, b) => b[0] - a[0]);
+    },
+    pop() {
+      return queue.shift();
+    },
+    isEmpty() {
+      return queue.length === 0;
+    },
+    getQueue() {
+      return queue;
+    },
+  };
+};
+
+module.exports = { readInputFile, splitByLine, findLCM, createCache, createPriorityQueue };
